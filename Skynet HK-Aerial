@@ -1,1 +1,37 @@
-Working on
+#include <iostream>
+#include <cstdlib>
+#include <ctime>
+
+using namespace std;
+
+int main()
+{
+	int grid[8][8];
+	int searchGridHighNumber = 64;
+	int searchGridLowNumber = 1;
+
+
+	srand((unsigned)time(0));
+	int randNum = (rand() % 64) +1;
+	cout << "8x8 Grid has been generated..." << endl;
+	cout << "The enemy is located at " << randNum << endl;
+	cout << "Skynet HK-Aerial Initializing Software..." << endl;
+
+	if (int targetLocationPrediction = ((searchGridHighNumber - searchGridLowNumber) / 2) + searchGridLowNumber)
+	{
+		cout << targetLocationPrediction << endl;
+	}
+		else if (targetLocationPrediction = randNum)
+		{
+			cout << "You have found Target" << endl;
+		}
+		else
+		{
+			int searchGridLowNumber = 33;
+			cout << "New searchGridLowNumber = " << searchGridLowNumber << endl;
+
+		}
+
+
+
+}
