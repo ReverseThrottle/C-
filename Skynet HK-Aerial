@@ -1,3 +1,10 @@
+/*
+	Zachary Hopping
+	09-24-2020
+	Skynet HK-Aerial 
+	Creates 8x8 grid with enemy location must use AI to find target within 8x8 grid target does not move he is stationary
+*/
+
 #include <iostream>
 #include <cstdlib>
 #include <ctime>
@@ -6,32 +13,20 @@ using namespace std;
 
 int main()
 {
-	int grid[8][8];
-	int searchGridHighNumber = 64;
-	int searchGridLowNumber = 1;
+	
+	int searchGridHighNumber;
+	int searchGridLowNumber;
 
-
+	//Random Number to indicate enemy location
 	srand((unsigned)time(0));
-	int randNum = (rand() % 64) +1;
+	int randomGrid = (rand() % 64) + 1;
+	
+	//Initialzing 8x8 grid with random number
+	int grid[8][8] = { randomGrid };
+
 	cout << "8x8 Grid has been generated..." << endl;
-	cout << "The enemy is located at " << randNum << endl;
+	cout << "The enemy is located at " << randomGrid << endl;
 	cout << "Skynet HK-Aerial Initializing Software..." << endl;
 
-	if (int targetLocationPrediction = ((searchGridHighNumber - searchGridLowNumber) / 2) + searchGridLowNumber)
-	{
-		cout << targetLocationPrediction << endl;
-	}
-		else if (targetLocationPrediction = randNum)
-		{
-			cout << "You have found Target" << endl;
-		}
-		else
-		{
-			int searchGridLowNumber = 33;
-			cout << "New searchGridLowNumber = " << searchGridLowNumber << endl;
-
-		}
-
-
-
+	//int targetLocationPrediction = ((searchGridHighNumber - searchGridLowNumber) / 2) + searchGridLowNumber;
 }
