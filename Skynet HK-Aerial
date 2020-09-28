@@ -3,6 +3,7 @@
 	09-24-2020
 	Skynet HK-Aerial 
 	Creates 8x8 grid with enemy location must use AI to find target within 8x8 grid target does not move he is stationary
+	This is not the most efficient way but it works 
 */
 
 #include <iostream>
@@ -14,19 +15,154 @@ using namespace std;
 int main()
 {
 	
-	int searchGridHighNumber;
-	int searchGridLowNumber;
+	int searchGridHighNumber = 64;
+	int searchGridLowNumber = 1;
 
 	//Random Number to indicate enemy location
 	srand((unsigned)time(0));
 	int randomGrid = (rand() % 64) + 1;
-	
+
 	//Initialzing 8x8 grid with random number
 	int grid[8][8] = { randomGrid };
 
 	cout << "8x8 Grid has been generated..." << endl;
 	cout << "The enemy is located at " << randomGrid << endl;
 	cout << "Skynet HK-Aerial Initializing Software..." << endl;
+	cout << "-------------------------------------------------------------------------------" << endl;
 
-	//int targetLocationPrediction = ((searchGridHighNumber - searchGridLowNumber) / 2) + searchGridLowNumber;
+	cout << "Skynet HK_Aerial scan number 1 beginning...." << endl;
+	//algorithm for Skynet HK-Aerial
+	int targetLocationPrediction = ((searchGridHighNumber - searchGridLowNumber) / 2) + searchGridLowNumber;
+
+	//IF statement that check grid with algorithm
+	if (targetLocationPrediction < randomGrid)
+	{
+		//If lower will set new grid search
+		int NewsearchGridLowNumber = 33;
+		cout << "Target prediction of " << targetLocationPrediction << " was lower than " << randomGrid << endl;
+		cout << "New searchGrid set to " << NewsearchGridLowNumber << endl;
+	}
+	else
+	{
+		//if it is within the grid search prediction has completed successfully 
+		cout << "Targets Loacation has been found at " << randomGrid << endl;
+		cout << "Skynet HK-Aerial took 1 predication to find enemy" << endl;
+		return 0;
+	}
+	
+	/*This then starts the process over by changing the searchGrid over and over until algorithm is succesful
+	* This is where I feel I could have created a loop that would save the time of me coding of all this 
+	* But I wanted to finish the assignment I do plan to keep working on it and making my code more efficient
+	*/
+	int NewsearchGridLowNumber = 33;
+	cout << "-------------------------------------------------------------------------------" << endl;
+	cout << "Skynet HK_Aerial scan 2 beginning...." << endl;
+	targetLocationPrediction = ((searchGridHighNumber - NewsearchGridLowNumber) / 2) + NewsearchGridLowNumber;
+
+	//Changes search grid to 49 and check if algorithm is succesful
+	if (targetLocationPrediction < randomGrid)
+	{
+		int NEWsearchGridLowNumber = 49;
+		cout << "Target prediction of " << targetLocationPrediction << " was lower than " << randomGrid << endl;
+		cout << "New searchGrid set to " << NEWsearchGridLowNumber << endl;
+	}
+	else
+	{
+		cout << "Targets Loacation has been found at " << randomGrid << endl;
+		cout << "Skynet HK-Aerial took 2 predication to find enemy" << endl;
+		return 0;
+	}
+
+	int NEWsearchGridLowNumber = 49;
+	cout << "-------------------------------------------------------------------------------" << endl;
+	cout << "Skynet HK_Aerial scan 3 beginning...." << endl;
+	targetLocationPrediction = ((searchGridHighNumber - NEWsearchGridLowNumber) / 2) + NEWsearchGridLowNumber;
+
+	//Changes search grid to 57 and check if algorithm is succesful
+	if (targetLocationPrediction < randomGrid)
+	{
+		int SearchGridLowNumber = 57;
+		cout << "Target prediction of " << targetLocationPrediction << " was lower than " << randomGrid << endl;
+		cout << "New searchGrid set to " << SearchGridLowNumber << endl;
+	}
+	else
+	{
+		cout << "Targets Loacation has been found at " << randomGrid << endl;
+		cout << "Skynet HK-Aerial took 3 predication to find enemy" << endl;
+		return 0;
+	}
+
+	int SearchGridLowNumber = 57;
+	cout << "-------------------------------------------------------------------------------" << endl;
+	cout << "Skynet HK_Aerial scan 4 beginning...." << endl;
+	targetLocationPrediction = ((searchGridHighNumber - SearchGridLowNumber) / 2) + SearchGridLowNumber;
+
+	//Changes search grid to 61 and check if algorithm is succesful
+	if (targetLocationPrediction < randomGrid)
+	{
+		int LowNumberGridSearch = 61;
+		cout << "Target prediction of " << targetLocationPrediction << " was lower than " << randomGrid << endl;
+		cout << "New searchGrid set to " << LowNumberGridSearch << endl;
+	}
+	else
+	{
+		cout << "Targets Loacation has been found at " << randomGrid << endl;
+		cout << "Skynet HK-Aerial took 4 predication to find enemy" << endl;
+		return 0;
+	}
+
+	int LowNumberGridSearch = 61;
+	cout << "-------------------------------------------------------------------------------" << endl;
+	cout << "Skynet HK_Aerial scan 5 beginning...." << endl;
+	targetLocationPrediction = ((searchGridHighNumber - LowNumberGridSearch) / 2) + LowNumberGridSearch;
+
+	//Changes search grid to 63 and check if algorithm is succesful
+	if (targetLocationPrediction < randomGrid)
+	{
+		int LowNumberGrid = 63;
+		cout << "Target prediction of " << targetLocationPrediction << " was lower than " << randomGrid << endl;
+		cout << "New searchGrid set to " << LowNumberGrid << endl;
+	}
+	else
+	{
+		cout << "Targets Loacation has been found at " << randomGrid << endl;
+		cout << "Skynet HK-Aerial took 5 predication to find enemy" << endl;
+		return 0;
+	}
+
+	int LowNumberGrid = 63;
+	cout << "-------------------------------------------------------------------------------" << endl;
+	cout << "Skynet HK_Aerial scan 6 beginning...." << endl;
+	targetLocationPrediction = ((searchGridHighNumber - LowNumberGrid) / 2) + LowNumberGrid;
+
+	//Changes search grid to 64 and check if algorithm is succesful
+	if (targetLocationPrediction < randomGrid)
+	{
+		int LowNumberGridNEW = 64;
+		cout << "Target prediction of " << targetLocationPrediction << " was lower than " << randomGrid << endl;
+		cout << "New searchGrid set to " << LowNumberGridNEW << endl;
+	}
+	else
+	{
+		cout << "Targets Loacation has been found at " << randomGrid << endl;
+		cout << "Skynet HK-Aerial took 6 predication to find enemy" << endl;
+		return 0;
+	}
+
+	int LowNumberGridNEW = 64;
+	cout << "-------------------------------------------------------------------------------" << endl;
+	cout << "Skynet HK_Aerial scan 7 beginning...." << endl;
+	targetLocationPrediction = ((searchGridHighNumber - LowNumberGridNEW) / 2) + LowNumberGridNEW;
+
+	if (targetLocationPrediction < randomGrid)
+	{
+		cout << "Target prediction of " << targetLocationPrediction << " was lower than " << randomGrid << endl;
+	}
+	else
+	{
+		cout << "Targets Loacation has been found at " << randomGrid << endl;
+		cout << "Skynet HK-Aerial took 7 predication to find enemy" << endl;
+		return 0;
+	}
+
 }
