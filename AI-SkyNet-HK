@@ -19,7 +19,7 @@ int main()
 	int searchGridHighNum = 64;
 	int searchGridLowNum = 1;
 	int target = rand() % 64 + 1;
-	int randGuess = rand() % 64 + 1;
+	int randGuess;
 	int humanGuess;
 	int humanCounter = 1;
 	int randCounter = 1;
@@ -39,7 +39,7 @@ int main()
 	{
 		do
 		{
-			cout << "Skynet-HK scan number " << humanCounter << endl;
+			cout << "Skynet-HK Human scan number " << humanCounter << endl;
 			cout << "Please guess targets location" << endl;
 			cin >> humanGuess;
 
@@ -65,6 +65,7 @@ int main()
 		{
 			cout << "Human found target at location " << target << endl;
 			cout << "Human took " << humanCounter << " predicitons to find the enemy." << endl;
+			cout << "---------------------------------------------------------------" << endl;
 		}
 
 	} while (testBegin);
@@ -74,17 +75,19 @@ int main()
 	{
 		do
 		{
-			cout << "Skynet-HK scan number " << randCounter << endl;
+			cout << "Skynet-HK AI-guess scan number " << randCounter << endl;
 			cout << "Please guess targets location" << endl;
-			cout << randGuess;
+			randGuess = rand() % 64 + 1;
+			cout << randGuess << endl;
+			++randCounter;
 
 			if (randGuess < target)
 			{
-				++randCounter;
+				cout << "Try again" << endl;
 			}
 			else if (randGuess > target)
 			{
-				++randGuess;
+				cout << "Try again" << endl;
 			}
 			else
 			{
