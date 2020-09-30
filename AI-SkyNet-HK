@@ -1,0 +1,104 @@
+/*
+	Zachary Hopping
+	09-29-2020
+	Ai into Skynet HK-Aerial
+
+
+*/
+
+#include <iostream>
+#include <cstdlib>
+#include <ctime>
+
+using namespace std;
+
+int main()
+{
+	srand(time(NULL)); // creates random number
+
+	int searchGridHighNum = 64;
+	int searchGridLowNum = 1;
+	int target = rand() % 64 + 1;
+	int randGuess = rand() % 64 + 1;
+	int humanGuess;
+	int humanCounter = 1;
+	int randCounter = 1;
+	int linCounter = 1;
+	int BinCounter = 1;
+	
+	bool testBegin = false;
+	bool TestBegin = false;
+	
+
+	cout << "Skynet-HK searching for enemy on 8x8 grid..." << endl;
+	cout << "The target is located at " << target << endl;
+	cout << "Skynet-HK Initializing..." << endl;
+	cout << "---------------------------------------------------------------" << endl;
+
+	do
+	{
+		do
+		{
+			cout << "Skynet-HK scan number " << humanCounter << endl;
+			cout << "Please guess targets location" << endl;
+			cin >> humanGuess;
+
+			if (humanGuess < target)
+			{
+				cout << "Try again" << endl;
+				++humanCounter;
+
+			}
+			else if (humanGuess > target)
+			{
+				cout << "Try again" << endl;
+				++humanCounter;
+			}
+			else
+			{
+				break;
+			}
+
+		} while ((humanGuess != target));
+
+		if (humanGuess == target)
+		{
+			cout << "Human found target at location " << target << endl;
+			cout << "Human took " << humanCounter << " predicitons to find the enemy." << endl;
+		}
+
+	} while (testBegin);
+	
+
+	do
+	{
+		do
+		{
+			cout << "Skynet-HK scan number " << randCounter << endl;
+			cout << "Please guess targets location" << endl;
+			cout << randGuess;
+
+			if (randGuess < target)
+			{
+				++randCounter;
+			}
+			else if (randGuess > target)
+			{
+				++randGuess;
+			}
+			else
+			{
+				break;
+			}
+
+		} while ((randGuess != target));
+
+		if (randGuess == target)
+		{
+			cout << "AI guess found target at location " << target << endl;
+			cout << "AI guess took " << randCounter << " predicitons to find the enemy." << endl;
+		}
+
+	} while(TestBegin);
+
+}
