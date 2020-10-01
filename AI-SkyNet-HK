@@ -103,5 +103,39 @@ int main()
 		}
 
 	} while(TestBegin);
+	
+	do
+	{
+		do
+		{
+			cout << "Skynet-HK AI-guess scan number " << linCounter << endl;
+			cout << "Please guess targets location" << endl;
+			linGuess = 1;
+			cout << linGuess;
+
+			if (linGuess < target)
+			{
+				cout << "Try again" << endl;
+				++linCounter;
+			}
+			else if (linGuess > target)
+			{
+				cout << "Try again" << endl;
+				++linCounter;
+			}
+			else
+			{
+				break;
+			}
+		} while ((linGuess != target));
+
+		if (linGuess == target)
+		{
+			cout << "Linear guess found target at location " << target << endl;
+			cout << "Linear guess took " << linCounter << " predicitons to find the enemy." << endl;
+			cout << "------------------------------------------------------------------------------" << endl;
+		}
+
+	} while (TestBegin);	
 
 }
