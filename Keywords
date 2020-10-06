@@ -107,4 +107,6 @@ int main()
     cout << "[Y]es or [N]o\n";
     string again;
     cin >> again;
+    
+    return 0;
 }
