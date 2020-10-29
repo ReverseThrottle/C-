@@ -1,10 +1,3 @@
-/*
-	Zachary Hopping
-	10-27-2020
-	Interactive Fiction
-	Create an interactive fiction game/story using more than one function our code must do something and be interactive
-*/
-
 #include <iostream>
 #include <string>
 #include <algorithm>
@@ -46,50 +39,50 @@ void wordFunc(string player1, string player2)
 	string censored{ input };
 	replace_if(censored.begin(), censored.end(), ::isalpha, '-');
 
-	while (wrong > 0 && censored != word)
-	{
+	while (wrong > 0 && censored != word) {
 		cout << censored << endl;
 		cout << "You have " << wrong << " guesses" << endl;
-
-		cout << player2 << " please guess one letter" << endl;
-		cin.ignore();
+		cout << "Guess: ";
 		getline(cin, guess);
 
-		if (guess.length() > 1)
-		{
-			cout << "Please only enter one letter";
+		// Determines if the guess is more than one character.
+		if (guess.length() > 1) {
+			cout << "That is more than one character.";
 		}
 
-		else 
-		{
+		// Determines if the guess is a lowercase letter.
+		else if (guess[0] > 'z' || guess[0] < 'a') {
+			cout << "Your guess must be a lowercase letter. ";
+		}
+
+		// First, the program finds the guess in the word. If it is found, the
+		// dashes at which their guess occurs will be replaced with the user's
+		// guess. Otherwise, the number of guesses will be decremented by 1.
+		else {
 			size_t index_found = word.find(guess);
-			if (index_found != string::npos) 
-			{
-				for (int i = 0; i < word.length(); i++) 
-				{
-					if (word[i] == guess[0]) 
-					{
+			if (index_found != string::npos) {
+				for (int i = 0; i < word.length(); i++) {
+					if (word[i] == guess[0]) {
 						censored[i] = guess[0];
 					}
 				}
-				cout << "Correct!" << endl;
+				cout << "Keep going!" << endl;
 			}
-			else 
-			{
-				cout << "Incorrect!" << endl;
+			else {
+				cout << "Wrong!" << endl;
 				wrong = wrong - 1;
 			}
 		}
 	}
 
-	if (censored == word)
-	{
-		cout << "You won!" << endl;
+	// Determines whether the player lost or won. Either way, the word will
+	// still be printed so they know what the word was.
+	if (censored == word) {
+		cout << "You win!" << endl;
 		cout << "The word was: " << word << endl;
 	}
-	else
-	{
-		cout << "You lose!" << endl;
+	else {
+		cout << "You lose." << endl;
 		cout << "The word was: " << word << endl;
 	}
 }
