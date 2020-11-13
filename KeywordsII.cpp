@@ -161,5 +161,6 @@ int main()
 	cout << "Each stimulation the program will pick 3 random words for you to de-scramble" << endl;
 	cout << "Each letter guessed you will recive feedback" << endl;
 
+	//Wait for user to press key to end program
 	guessFunc();
 }
