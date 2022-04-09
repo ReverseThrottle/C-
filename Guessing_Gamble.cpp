@@ -1,6 +1,6 @@
 #include <iostream>
-#include <stdlib.h>
-#include <time.h>
+#include <cstdlib>
+#include <ctime>
 
 /*
  * Guessing game goal is to guess number 0-100 you have 5 tries
@@ -8,6 +8,7 @@
  * you can keep playing until you have no money
  */
 
+//TODO - Need to work on logic for guessing number!
 
 int main() {
 
@@ -15,7 +16,7 @@ int main() {
     int inc_guess = 0;
     float money = 10000;
     float bet;
-    srand (time(NULL));
+    srand (time(nullptr));
     secret = rand() %100 +1;
 
     std::cout<<"Welcome to the guessing game\n";
@@ -24,25 +25,22 @@ int main() {
     std::cout<<"Directions:\n[1]The goal is to guess the secret number\n[2]You have a total of 5 guesses\n";
     std::cout<<"[3]Before you begin guessing you are asked to place a bet\n";
 
-    std::cout<<"Place your bet: ";
-    std::cin>>bet;
-    if (bet > money)
-    {
-        std::cout<<"You dont have that much money, sorry\n";
-        std::cout<<"Try placing another bet: ";
-        std::cin>>bet;
 
-    }
-    else if (bet <= 0)
-    {
-        std::cout<<"You cant place a bet for zero dollars\n";
-        std::cout<<"Try placing another bet: ";
-        std::cin>>bet;
-    }
-    std::cout<<"You placed a bet for: "<<bet<<"\n";
 
     do {
-        std::cout << "Guess the number between 0-100: ";
+        std::cout<<"Place your bet: ";
+        std::cin>>bet;
+        if (bet <= 0){
+            std::cout << "You cant place a bet for zero dollars\n";
+        }
+        else if (bet >= money){
+            std::cout << "You dont have that much money, sorry\n";
+        }
+    }while(bet == 0 || bet >= money);
+    std::cout << "You placed a bet for: " << bet << "\n";
+
+    do {
+        std::cout << "\nGuess the number between 0-100: ";
         std::cin >> guess;
         std::cout << "You guessed: " << guess << "\n";
         if (guess < secret)
@@ -54,6 +52,10 @@ int main() {
         {
             std::cout << "Lower!\n";
             ++inc_guess;
+        }
+        else if (guess > 100)
+        {
+            std::cout << "Guess too high, please pick a lower number\n";
         }
         else
         {
