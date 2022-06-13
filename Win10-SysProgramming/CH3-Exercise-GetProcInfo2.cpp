@@ -7,15 +7,17 @@
 #ifndef PCH_H
 #define PCH_H
 
-#include <Windows.h>
-#include <Psapi.h>
-#include <stdio.h>
 #include <wil\resource.h>
 #include <memory>
 
 #endif //PCH_H
 
-
+//GetProcessMemoryInfo
+//GetExitCodeProcess
+//IsProcessInJob
+//Changing Token prives - https://docs.microsoft.com/en-us/windows/win32/secbp/changing-privileges-in-a-token
+//ThreadLoopHelper - https://docs.microsoft.com/en-us/windows/win32/toolhelp/taking-a-snapshot-and-viewing-processes
+//ModuleLoopHelper
 
 bool EnableDebugPrivilege() {
     wil::unique_handle hToken;
@@ -42,7 +44,8 @@ int main(void) {
     PROCESS_PROTECTION_LEVEL_INFORMATION ProtectedLevel;
     LPVOID ProcInfo = &ProtectedLevel;
     DWORD ProcInfoSize = sizeof(PROCESS_PROTECTION_LEVEL_INFORMATION);
-    BOOL test;
+    //BOOL test;
+    DWORD dwPriorityClass;
 
     if (!EnableDebugPrivilege()) {
         printf("Failed to enable Debug privilege!\n");
@@ -67,16 +70,15 @@ int main(void) {
     do
     {
 
-        printf("Process ID: %d -- Process Executable Filename: %ws\n", pe32.th32ProcessID, pe32.szExeFile);
 
-        HANDLE hProcess = OpenProcess(PROCESS_SET_INFORMATION, FALSE, pe32.th32ProcessID);
+        HANDLE hProcess = OpenProcess(PROCESS_QUERY_LIMITED_INFORMATION, FALSE, pe32.th32ProcessID);
         if (hProcess == NULL)
         {
             printf("Error opening process: %ws -- Error code: %d\n", pe32.szExeFile, GetLastError());
         }
         else
         {
-            test = GetProcessInformation(hProcess, pic, ProcInfo, ProcInfoSize);
+            /*test = GetProcessInformation(hProcess, pic, ProcInfo, ProcInfoSize);
             if (test == 0)
             {
                 printf("Error retriving info: %d\n", GetLastError());
@@ -85,7 +87,27 @@ int main(void) {
             {
                 printf("Protection level: %d", ProtectedLevel.ProtectionLevel);
 
+            }*/
+            printf("Process ID: %d -- Executable Filename: %ws\n", pe32.th32ProcessID, pe32.szExeFile);
+
+            WCHAR fullPathExe [MAX_PATH];
+            DWORD pdwSize = MAX_PATH;
+            if (!QueryFullProcessImageName(hProcess, 0, fullPathExe, &pdwSize))
+            {
+                printf("Failed to retrieve full path of executable: %ws\n", pe32.szExeFile);
+                printf("Error code: %d\n", GetLastError());
             }
+
+            printf("Full executable path: %ws\n", &fullPathExe);
+            
+            dwPriorityClass = GetPriorityClass(hProcess);
+            if (dwPriorityClass == 0)
+            {
+                printf("Erorr getting priority for process: %ws -- Error code: %d\n", pe32.szExeFile, GetLastError());
+            }
+
+            printf("Class priority: 0x%X\n", dwPriorityClass);
+
 
         }
         
