@@ -106,7 +106,7 @@ int main(void) {
                 printf("Erorr getting priority for process: %ws -- Error code: %d\n", pe32.szExeFile, GetLastError());
             }
 
-            printf("Class priority: 0x%X\n", dwPriorityClass);
+            printf("Class priority: 0x%X\n\n", dwPriorityClass);
 
 
         }
