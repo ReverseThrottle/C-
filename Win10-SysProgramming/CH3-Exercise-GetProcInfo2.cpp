@@ -20,18 +20,41 @@
 //ModuleLoopHelper
 
 bool EnableDebugPrivilege() {
-    wil::unique_handle hToken;
-    if (!::OpenProcessToken(::GetCurrentProcess(), TOKEN_ADJUST_PRIVILEGES, hToken.addressof()))
-        return false;
+    HANDLE hToken = NULL;
+    LUID PrivRequired;
+    LPWSTR PrivName = NULL;
+    DWORD cName = NULL;
 
-    TOKEN_PRIVILEGES tp;
-    tp.PrivilegeCount = 1;
-    tp.Privileges[0].Attributes = SE_PRIVILEGE_ENABLED;
-    if (!::LookupPrivilegeValue(nullptr, SE_DEBUG_NAME, &tp.Privileges[0].Luid))
-        return false;
+    if (OpenProcessToken(GetCurrentProcess(), TOKEN_ADJUST_PRIVILEGES, &hToken)); {
 
-    if (!::AdjustTokenPrivileges(hToken.get(), FALSE, &tp, sizeof(tp), nullptr, nullptr))
-        return false;
+        printf("Handle to token: 0x%08x\n", hToken);
+
+        if (LookupPrivilegeValue(NULL, SE_DEBUG_NAME, &PrivRequired))
+        {
+            //LookupPrivilegeName(NULL, &PrivRequired, NULL, &cName);
+
+            //PrivName = (LPWSTR)sizeof(cName);
+
+            //if (LookupPrivilegeName(NULL, &PrivRequired, PrivName, &cName))
+            //{
+            //    printf("Privileges: %p", PrivName);
+            //}
+            //
+            //printf("Error getting privilege name - Error code: %d\n", GetLastError());
+
+            //Do Something...
+
+
+        }
+        else {
+            printf("Error getting priv LUID - Error code : % d\n", GetLastError());
+        }
+        
+    }
+
+    CloseHandle(hToken);
+    
+
 
     return ::GetLastError() == ERROR_SUCCESS;
 }
