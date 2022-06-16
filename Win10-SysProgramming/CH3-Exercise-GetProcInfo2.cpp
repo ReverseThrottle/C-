@@ -13,10 +13,8 @@
 
 #endif //PCH_H
 
-//GetProcessMemoryInfo
-//GetExitCodeProcess
 //IsProcessInJob
-//Changing Token prives - https://docs.microsoft.com/en-us/windows/win32/secbp/changing-privileges-in-a-token
+//Changing Token prives - https://docs.microsoft.com/en-us/windows/win32/secbp/changing-privileges-in-a-token           DONE
 //ThreadLoopHelper - https://docs.microsoft.com/en-us/windows/win32/toolhelp/taking-a-snapshot-and-viewing-processes
 //ModuleLoopHelper
 
@@ -60,6 +58,87 @@ bool EnableDebugPrivilege()
     return TRUE;
 }
 
+
+
+int GetModuleInfo(DWORD pid) {
+
+    HANDLE hProcess = OpenProcess(PROCESS_QUERY_INFORMATION | PROCESS_VM_READ, FALSE, pid);
+    
+    if (hProcess == NULL) 
+    {
+
+        printf("Failed to open processID: %d\nError code: %d\n", pid, GetLastError());
+        return -1;
+    }
+
+    HMODULE modules;
+    DWORD cdModuleSize = sizeof(modules);
+    DWORD cdModuleSizeNeed;
+
+    if (EnumProcessModulesEx(hProcess, &modules, cdModuleSize, &cdModuleSizeNeed, LIST_MODULES_ALL) == 0)
+    {
+        printf("Failed to enum modules in PID: %d\nError code: %d\n", pid, GetLastError());
+        return -1;
+    }
+
+    DWORD moduleCount = cdModuleSizeNeed / sizeof(HMODULE);
+
+    TCHAR ProcessName[MAX_PATH] = L"<Unknown>";
+    DWORD ProcNameSize = sizeof(ProcessName);
+    printf("Successfully retrieved module handle!\n");
+    if (GetModuleBaseName(hProcess, modules, ProcessName, ProcNameSize))
+    {
+        printf("BaseName: %ws\n", ProcessName);
+    }
+    
+    TCHAR PathName[MAX_PATH] = L"<Unknown>";
+    DWORD cbSizePath = sizeof(PathName);
+
+    if (GetProcessImageFileName(hProcess, PathName, cbSizePath))
+    {
+        printf("Full path: %ws\n", PathName);
+    }
+    
+    
+    MODULEINFO mi; 
+    DWORD cbMiSize = sizeof(MODULEINFO);
+
+    if (GetModuleInformation(hProcess, modules, &mi, cbMiSize) != 0)
+    {
+        printf("Module Base address: 0x%p - Size of Image: %d - Entry point: 0x%p\n", mi.lpBaseOfDll, mi.SizeOfImage, mi.EntryPoint);
+    }
+    
+
+
+}
+
+void EnumProc() {
+
+    DWORD pids[1024];
+    DWORD cdSize = sizeof(pids);
+    DWORD cdSizeNeed;
+
+
+    if (EnumProcesses(pids, cdSize, &cdSizeNeed) == 0)
+    {
+        printf("Failed to enum processes\nError code: %d\n", GetLastError());     
+    
+    }
+
+    cdSize = cdSizeNeed / sizeof(DWORD);
+
+    for (int i = 0; i < cdSize; i++)
+    {
+        if (pids[i] != 0)
+        {
+            // printf("Process ID: %d\n", pids[i]);
+            GetModuleInfo(pids[i]);
+        }
+    }
+
+    
+
+}
 
 
 void ProcNamePriority() {
@@ -133,12 +212,10 @@ int main(void) {
         printf("Enabled Debug privileges!\n");
     }
 
-    ProcNamePriority();
+    //ProcNamePriority();
 
-    
+    EnumProc();
 
-
-    getchar();
 
     return 0;
 }
